@@ -1,0 +1,11 @@
+services:
+  relay:
+    build: .
+    command: ["serve", "0.0.0.0:8080"]
+    ports:
+      - "0.0.0.0:8080:8080" # IPv4 only: keeps real client IPs for the rate limit
+    environment:
+      GOMEMLIMIT: 100MiB
+    mem_limit: 128m # backstop for the in-app 64 MB cap; the box is shared and has 1 GB
+    read_only: true
+    restart: unless-stopped
